@@ -1,0 +1,54 @@
+﻿@model DataConcert
+@{
+    Layout = "_ConcertLayout";
+}
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>AEdit Concert</h3>
+            </div>
+
+            <div class="card-body">
+                <form method="post" action="Edit">
+                    <input type="hidden" name="Id" value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label>Concert Name</label>
+                        <input type="text" name="NamaKonser" class="form-control" value="@Model.NamaKonser"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Musician</label>
+                        <input type="text" name="Musisi" class="form-control" value="@Model.Musisi"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Place of Concert</label>
+                        <input type="text" name="TempatKonser" class="form-control" value="@Model.TempatKonser"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Date of Concert</label>
+                        <input type="datetime-local" name="TanggalKonser" class="form-control" value="@Model.TanggalKonser" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Kuota</label>
+                        <input type="text" name="KuotaTiket" class="form-control" value="@Model.KuotaTiket"/>
+                    </div>
+                    <div class="mb-3">
+                        <label>Status</label>
+                        <select name="Status" class="form-control" value="@Model.Status">
+                            <option>Pilih Status</option>
+                            <option>Published</option>
+                            <option>Not Published</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

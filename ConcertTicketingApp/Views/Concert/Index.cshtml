@@ -1,0 +1,53 @@
+﻿@model List<DataConcert>
+
+@{
+    Layout = "_ConcertLayout";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3>List Concert</h3>
+            </div>
+
+            <div class="card-body">
+                <a href="/Concert/Add" class="btn btn-success">Add Concert</a>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nama Konser</th>
+                            <th>Musisi</th>
+                            <th>Tempat Konser</th>
+                            <th>Tanggal Konser</th>
+                            <th>Kuota Tiket</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var user in Model)
+                        {
+                            <tr>
+                                <td>@user.NamaKonser</td>
+                                <td>@user.Musisi</td>
+                                <td>@user.TempatKonser</td>
+                                <td>@user.TanggalKonser</td>
+                                <td>@user.KuotaTiket</td>
+                                <td>@user.Status</td>
+
+                                <td>
+                                    <a href="/Concert/Edit/@user.Id" class="btn btn-warning">Edit</a>
+                                    <a href="/Concert/Delete/@user.Id" class="btn btn-danger">Delete</a>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
