@@ -13,5 +13,6 @@ namespace ConcertTicketingApp.Data
 
         public DbSet<Admin> Admins { get; set; }
         public DbSet<DataConcert> dataConcerts { get; set; }
+        public DbSet<Order> orders { get; set; }
     }
 }

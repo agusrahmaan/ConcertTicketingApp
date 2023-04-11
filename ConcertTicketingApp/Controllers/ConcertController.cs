@@ -1,16 +1,21 @@
 ﻿using ConcertTicketingApp.Data;
 using ConcertTicketingApp.Models;
 using ConcertTicketingApp.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConcertTicketingApp.Controllers
 {
+    [Authorize]
     public class ConcertController : Controller
     {
         private readonly MySqlContext _context;
-        public ConcertController(MySqlContext c)
+        private readonly IWebHostEnvironment _env;
+        public ConcertController(MySqlContext c, IWebHostEnvironment env)
         {
             _context = c;
+            _env = env;
         }
         public IActionResult Index()
         {
@@ -24,9 +29,25 @@ namespace ConcertTicketingApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Add([FromForm] DataConcert dataConcert)
+        public IActionResult Add([FromForm] DataConcert dataConcert, IFormFile Photo)
         {
             
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            var filename = "photo_" + dataConcert.NamaKonser + Path.GetExtension(Photo.FileName);
+            var filepath = Path.Combine(_env.WebRootPath, "upload", filename);
+
+            using (var stream = System.IO.File.Create(filepath))
+            {
+                Photo.CopyTo(stream);
+            }
+
+            dataConcert.Photo = filename;
+
             _context.dataConcerts.Add(dataConcert);
             _context.SaveChanges();
         
@@ -40,13 +61,22 @@ namespace ConcertTicketingApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit([FromForm] DataConcert dataConcert)
+        public IActionResult Edit([FromForm] DataConcert dataConcert, IFormFile Photo)
         {
+            var filename = "photo_" + dataConcert.NamaKonser + Path.GetExtension(Photo.FileName);
+            var filepath = Path.Combine(_env.WebRootPath, "upload", filename);
+
+            using (var stream = System.IO.File.Create(filepath))
+            {
+                Photo.CopyTo(stream);
+            }
+
+            dataConcert.Photo = filename;
+
             _context.dataConcerts.Update(dataConcert);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
-
         }
 
         public IActionResult Delete(int id)
@@ -57,6 +87,21 @@ namespace ConcertTicketingApp.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult DetailOrder()
+        {
+            var order = _context.orders.ToList();
+            return View(order);
+        }
+
+        public IActionResult Deleted(int id)
+        {
+            var del = _context.orders.FirstOrDefault(x => x.Id == id);
+            _context.orders.Remove(del);
+            _context.SaveChanges();
+
+            return RedirectToAction("DetailOrder");
         }
     }
 }

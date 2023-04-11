@@ -1,0 +1,39 @@
+﻿@model DataConcert
+@{
+    Layout = "_NoLayout";
+}
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Add Concert</h3>
+            </div>
+
+            <div class="card-body">
+                <form method="post" action="Order">
+                    <div class="mb-3">
+                        <label>Name</label>
+                        <input type="text" name="Name" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label>Email</label>
+                        <input type="text" name="Email" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <label>No Handphone</label>
+                        <input type="text" name="NoTelepon" class="form-control" />
+                    </div>
+                    <div class="mb-3">
+                        <a class="btn btn-danger" href="/Detail">
+                            Back
+                        </a>
+                        <button type="submit" class="btn btn-success">
+                            Save
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

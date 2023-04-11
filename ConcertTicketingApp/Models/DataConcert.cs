@@ -14,6 +14,6 @@ namespace ConcertTicketingApp.Models
         public DateTime TanggalKonser { get; set; }
         public int KuotaTiket { get; set; }
         public string Status { get; set; }
-
+        public string? Photo { get; set; }
     }
 }

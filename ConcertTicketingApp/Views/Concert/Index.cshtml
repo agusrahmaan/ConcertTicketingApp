@@ -5,10 +5,10 @@
 }
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-lg-12">
         <div class="card">
             <div class="card-header">
-                <h3>List Concert</h3>
+                <h3>Data Concert</h3>
             </div>
 
             <div class="card-body">
@@ -17,12 +17,13 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Nama Konser</th>
-                            <th>Musisi</th>
-                            <th>Tempat Konser</th>
-                            <th>Tanggal Konser</th>
-                            <th>Kuota Tiket</th>
+                            <th>Concert Name</th>
+                            <th>Musician</th>
+                            <th>Concert Venue</th>
+                            <th>Concert Date</th>
+                            <th>Ticket Quota</th>
                             <th>Status</th>
+                            <th>Photo</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -37,7 +38,7 @@
                                 <td>@user.TanggalKonser</td>
                                 <td>@user.KuotaTiket</td>
                                 <td>@user.Status</td>
-
+                                <td>@user.Photo</td>
                                 <td>
                                     <a href="/Concert/Edit/@user.Id" class="btn btn-warning">Edit</a>
                                     <a href="/Concert/Delete/@user.Id" class="btn btn-danger">Delete</a>

@@ -1,6 +1,6 @@
 ﻿@model DataConcert
 @{
-    Layout = "_ConcertLayout";
+    Layout = "_NoLayout";
 }
 
 <div class="row">
@@ -11,7 +11,7 @@
             </div>
 
             <div class="card-body">
-                <form method="post" action="Add">
+                <form enctype="multipart/form-data" method="post" action="Add">
                     <div class="mb-3">
                         <label>Concert Name</label>
                         <input type="text" name="NamaKonser" class="form-control" />
@@ -35,12 +35,18 @@
                     <div class="mb-3">
                         <label>Status</label>
                         <select name="Status" class="form-control">
-                            <option>Pilih Status</option>
-                            <option>Published</option>
                             <option>Not Published</option>
+                            <option>Published</option>
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label>Photo</label>
+                        <input type="file" name="Photo" class="form-control" accept=".png,.jpg,.jpeg" />
+                    </div>
+                    <div class="mb-3">
+                        <a class="btn btn-danger" href="/Concert/Index">
+                            Back
+                        </a>
                         <button type="submit" class="btn btn-success">
                             Save
                         </button>

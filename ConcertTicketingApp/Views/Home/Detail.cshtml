@@ -1,6 +1,7 @@
 ﻿@model DataConcert
+
 @{
-    Layout = "_ConcertLayout";
+    Layout = "_NoLayout";
 }
 
 <div class="row">
@@ -14,27 +15,29 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td>Concert Name</td>
+                            <th>Concert Name</th>
                             <td>@Model.NamaKonser</td>
                         </tr>
                         <tr>
-                            <td>Fullname</td>
+                            <th>Musician</th>
                             <td>@Model.Musisi</td>
                         </tr>
                         <tr>
-                            <td>Username</td>
+                            <th>Concert Venue</th>
                             <td>@Model.TempatKonser</td>
                         </tr>
                         <tr>
-                            <td>Fullname</td>
+                            <th>Concert Date</th>
                             <td>@Model.TanggalKonser</td>
                         </tr>
                         <tr>
-                            <td>Username</td>
+                            <th>Ticket Quota</th>
                             <td>@Model.KuotaTiket</td>
                         </tr>
                     </tbody>
                 </table>
+                <a class="btn btn-danger" href="/Home/Index">Back</a>
+                <a class="btn btn-success" href="/Home/Order">Order</a>
             </div>
         </div>
     </div>

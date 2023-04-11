@@ -29,6 +29,21 @@ namespace ConcertTicketingApp.Controllers
             return View(concert);
         }
 
+        public IActionResult Order()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Order([FromForm]Order order) 
+        { 
+           
+            _context.orders.Add(order);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Privacy()
         {
             return View();
