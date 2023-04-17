@@ -32,6 +32,7 @@ namespace ConcertTicketingApp.Controllers
             return View(concert);
         }
 
+
         public IActionResult Order(int id)
         {
             var getConscertId = _context.dataConcerts.Where(dc => dc.Id == id).FirstOrDefault();
