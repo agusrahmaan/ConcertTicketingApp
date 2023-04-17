@@ -7,11 +7,12 @@
     <div class="col-6">
         <div class="card">
             <div class="card-header">
-                <h3>Add Concert</h3>
+                <h3>Add Order</h3>
             </div>
 
             <div class="card-body">
-                <form method="post" action="Order">
+                <form method="post" asp-action="Order" asp-controller="Home">
+                    <input type="text" name="DataConcertId" value="@Model.Id" hidden/>
                     <div class="mb-3">
                         <label>Name</label>
                         <input type="text" name="Name" class="form-control" />
@@ -25,9 +26,6 @@
                         <input type="text" name="NoTelepon" class="form-control" />
                     </div>
                     <div class="mb-3">
-                        <a class="btn btn-danger" href="/Detail">
-                            Back
-                        </a>
                         <button type="submit" class="btn btn-success">
                             Save
                         </button>

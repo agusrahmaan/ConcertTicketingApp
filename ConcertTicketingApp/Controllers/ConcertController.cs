@@ -3,6 +3,7 @@ using ConcertTicketingApp.Models;
 using ConcertTicketingApp.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConcertTicketingApp.Controllers
@@ -38,7 +39,7 @@ namespace ConcertTicketingApp.Controllers
                 return View();
             }
 
-            var filename = "photo_" + dataConcert.NamaKonser + Path.GetExtension(Photo.FileName);
+            var filename = "photo_" + dataConcert.Musisi + Path.GetExtension(Photo.FileName);
             var filepath = Path.Combine(_env.WebRootPath, "upload", filename);
 
             using (var stream = System.IO.File.Create(filepath))
@@ -63,7 +64,7 @@ namespace ConcertTicketingApp.Controllers
         [HttpPost]
         public IActionResult Edit([FromForm] DataConcert dataConcert, IFormFile Photo)
         {
-            var filename = "photo_" + dataConcert.NamaKonser + Path.GetExtension(Photo.FileName);
+            var filename = "photo_" + dataConcert.Musisi + Path.GetExtension(Photo.FileName);
             var filepath = Path.Combine(_env.WebRootPath, "upload", filename);
 
             using (var stream = System.IO.File.Create(filepath))
@@ -85,6 +86,7 @@ namespace ConcertTicketingApp.Controllers
 
             _context.dataConcerts.Remove(concert);
             _context.SaveChanges();
+            
 
             return RedirectToAction("Index");
         }
@@ -98,8 +100,22 @@ namespace ConcertTicketingApp.Controllers
         public IActionResult Deleted(int id)
         {
             var del = _context.orders.FirstOrDefault(x => x.Id == id);
+            var addBack = _context.orders.Include(x => x.DataConcert).FirstOrDefault(x => x.Id == id);
+            addBack.DataConcert.KuotaTiket += 1;
+
+            /*var addBack = _context.dataConcerts.Where(x => x.Id == id).FirstOrDefault();
+            addBack.KuotaTiket += 1;
+
+            _context.dataConcerts.Update(addBack);
+            _context.SaveChanges();*/
+
+           
+
+            _context.orders.Update(addBack);
             _context.orders.Remove(del);
             _context.SaveChanges();
+
+
 
             return RedirectToAction("DetailOrder");
         }

@@ -1,6 +1,9 @@
 ﻿using ConcertTicketingApp.Data;
 using ConcertTicketingApp.Models;
+using ConcertTicketingApp.Models.ViewModels;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Crypto.Tls;
 using System.Diagnostics;
 
 namespace ConcertTicketingApp.Controllers
@@ -19,7 +22,7 @@ namespace ConcertTicketingApp.Controllers
 
         public IActionResult Index()
         {
-            List<DataConcert> datas = _context.dataConcerts.ToList();
+            List<DataConcert> datas = _context.dataConcerts.Where(x => x.Status == "Published").ToList();
             return View(datas);
         }
 
@@ -29,16 +32,33 @@ namespace ConcertTicketingApp.Controllers
             return View(concert);
         }
 
-        public IActionResult Order()
+        public IActionResult Order(int id)
         {
-            return View();
+            var getConscertId = _context.dataConcerts.Where(dc => dc.Id == id).FirstOrDefault();
+            return View(getConscertId);
         }
 
         [HttpPost]
-        public IActionResult Order([FromForm]Order order) 
-        { 
-           
-            _context.orders.Add(order);
+        public IActionResult Order([FromForm] OrderForm orderForm) 
+        {
+            var orders = new Order()
+            {
+                DataConcert = _context.dataConcerts.Where(x => x.Id == orderForm.DataConcertId).FirstOrDefault(),
+                Name = orderForm.Name,
+                Email = orderForm.Email,
+                NoTelepon = orderForm.NoTelepon
+            };
+            _context.orders.Add(orders);
+            _context.SaveChanges();
+
+            var getKuotaConcert = _context.dataConcerts.Where(dc => dc.Id == orderForm.DataConcertId).FirstOrDefault();
+            if(getKuotaConcert.KuotaTiket <= 0)
+            {
+                return BadRequest("Ticket is sold out!!!");
+            }
+            getKuotaConcert.KuotaTiket -= 1;
+
+            _context.dataConcerts.Update(getKuotaConcert);
             _context.SaveChanges();
 
             return RedirectToAction("Index");
@@ -54,6 +74,5 @@ namespace ConcertTicketingApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
     }
 }
