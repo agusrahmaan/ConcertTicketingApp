@@ -103,13 +103,6 @@ namespace ConcertTicketingApp.Controllers
             var addBack = _context.orders.Include(x => x.DataConcert).FirstOrDefault(x => x.Id == id);
             addBack.DataConcert.KuotaTiket += 1;
 
-            /*var addBack = _context.dataConcerts.Where(x => x.Id == id).FirstOrDefault();
-            addBack.KuotaTiket += 1;
-
-            _context.dataConcerts.Update(addBack);
-            _context.SaveChanges();*/
-
-           
 
             _context.orders.Update(addBack);
             _context.orders.Remove(del);
